@@ -3,12 +3,11 @@ import { createServer, type Server } from "http";
 import { promises as fs } from "fs";
 import path from "path";
 import { homedir } from "os";
-import { fileURLToPath } from "url";
 
 async function readBatteryData() {
   try {
     const data = await fs.readFile(
-      "/Users/balli/.local/share/batteries/Batteries.json",
+      `${path.join(homedir(), ".local/share", "batteries", "Batteries.json")}`,
       "utf8"
     );
     return JSON.parse(data);
