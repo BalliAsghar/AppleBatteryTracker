@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { SunIcon, MoonIcon } from "@/lib/icons";
 import { useTheme } from "@/components/ui/theme-provider";
 import { motion } from "framer-motion";
 import { SVGDeviceIcon } from "./svg-device-icon";
+import { Button } from "./ui/button";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
