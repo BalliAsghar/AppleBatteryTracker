@@ -37,7 +37,7 @@ export function ThemeToggle() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="text-xl"
           >
-            🌕
+            🌙
           </motion.div>
         )}
       </div>
