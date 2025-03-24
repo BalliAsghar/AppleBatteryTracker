@@ -216,41 +216,6 @@ export const AirpodCaseIcon: React.FC<IconProps> = ({
   </svg>
 );
 
-export const WatchIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
-    <rect
-      x="8"
-      y="3"
-      width="8"
-      height="18"
-      rx="4"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
-    <path d="M8 9H16" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M8 15H16" stroke="currentColor" strokeWidth="1.5" />
-    <path
-      d="M6.5 9V15"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M17.5 9V15"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-  </svg>
-);
-
 export const SunIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
   <svg
     width={size}
