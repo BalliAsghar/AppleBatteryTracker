@@ -150,40 +150,13 @@ export function AirpodsCard({
             theme === "dark" ? "border-zinc-700" : "border-gray-100"
           }`}
         >
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <p
-                className={`text-xs ${
-                  theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                }`}
-              >
-                Model
-              </p>
-              <p
-                className={`text-sm font-medium ${
-                  theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                } mt-1`}
-              >
-                AirPods Pro
-              </p>
-            </div>
-            <div>
-              <p
-                className={`text-xs ${
-                  theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                }`}
-              >
-                Serial
-              </p>
-              <p
-                className={`text-sm font-medium ${
-                  theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                } mt-1`}
-              >
-                {leftPod.deviceId.slice(0, 8)}
-              </p>
-            </div>
-          </div>
+          {Object.values([leftPod, rightPod, airpodsCase]).some(
+            (pod) => pod.batteryLevel <= 20 && !pod.isCharging
+          ) && (
+            <p className="text-sm font-medium text-[#FF3B30] text-center">
+              Low Battery
+            </p>
+          )}
         </div>
       </CardContent>
     </Card>

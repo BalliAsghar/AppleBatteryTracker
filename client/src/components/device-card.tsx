@@ -55,67 +55,24 @@ export function DeviceCard({ device }: DeviceCardProps) {
           />
         </div>
 
-        <div className="flex items-center mt-6">
-          <BatteryIndicator
-            percentage={device.batteryLevel}
-            showPercentage={true}
-            isCharging={device.isCharging}
-          />
-        </div>
-
         <div
           className={`mt-5 pt-5 border-t ${
             theme === "dark" ? "border-zinc-700" : "border-gray-100"
           }`}
         >
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <p
-                className={`text-xs ${
-                  theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                }`}
-              >
-                Model
-              </p>
-              <p
-                className={`text-sm font-medium ${
-                  theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                } mt-1`}
-              >
-                {"Unknown"}
-              </p>
-            </div>
-            <div>
-              <p
-                className={`text-xs ${
-                  theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                }`}
-              >
-                Serial
-              </p>
-              <p
-                className={`text-sm font-medium ${
-                  theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                } mt-1`}
-              >
-                {device.deviceId.slice(0, 8)}
-              </p>
-            </div>
-            {device.batteryLevel <= 20 && !device.isCharging && (
-              <div>
-                <p
-                  className={`text-xs ${
-                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                  }`}
-                >
-                  Status
-                </p>
-                <p className="text-sm font-medium text-[#FF3B30] mt-1">
-                  Low Battery
-                </p>
-              </div>
-            )}
+          <div className="flex justify-center items-center">
+            <BatteryIndicator
+              percentage={device.batteryLevel}
+              showPercentage={true}
+              isCharging={device.isCharging}
+              size="lg"
+            />
           </div>
+          {device.batteryLevel <= 20 && !device.isCharging && (
+            <p className="text-sm font-medium text-[#FF3B30] mt-4 text-center">
+              Low Battery
+            </p>
+          )}
         </div>
       </CardContent>
     </Card>
