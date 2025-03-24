@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 16px;
+  }
+  
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 212 100% 45%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 5% 10%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 5% 10%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 212 100% 45%;
+    
+    /* Apple-specific colors */
+    --apple-blue: 212 100% 45%;
+    --apple-dark: 240 3% 12%;
+    --apple-gray: 240 3% 54%;
+    --apple-light-gray: 240 10% 96%;
+    --apple-green: 142 70% 49%;
+    --apple-orange: 30 100% 50%;
+    --apple-red: 357 100% 59%;
+    
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-[#F5F5F7] text-foreground font-sf-pro antialiased min-h-screen transition-colors duration-300;
+  }
+  
+  .dark body {
+    @apply bg-zinc-900;
+  }
+}
+
+@layer components {
+  .font-sf-pro {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Tab navigation styling */
+  .tab.tab-active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #0071E3;
+    transition: all 0.3s ease;
+  }
+  
+  .dark .tab.tab-active::after {
+    background-color: #0A84FF; /* Slightly brighter blue for dark mode */
+  }
+}
