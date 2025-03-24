@@ -1,95 +1,63 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
-import { DeviceType } from "@shared/schema";
 
 // Sample device data for the dashboard
 const mockDevices = [
   {
-    name: "iPhone 14 Pro",
-    type: DeviceType.IPHONE,
-    model: "iPhone 14 Pro",
-    serial: "GHXY78900J",
-    osVersion: "16.1.1",
-    batteryPercentage: 78,
-    cycleCount: 123,
+    batteryLevel: 80,
+    deviceType: "iphone",
+    dataSource: "IDevice_Network",
+    isCharging: false,
+    deviceName: "Balli’s iPhone",
+    deviceModel: "iPhone13,4",
+    deviceId: "00008101-000B592434E0001E",
+    lastUpdate: 1742838674.521682,
+  },
+  {
     isCharging: true,
+    deviceType: "airpods_right",
+    lastUpdate: 1742838659.5988321,
+    deviceName: "Balli’s AirPods Pro (Right)",
+    dataSource: "BLE_AirPods",
+    batteryLevel: 100,
+    deviceId: "56DC0295-6146-7DB9-294E-BC06053789DE",
   },
   {
-    name: "iPhone 13",
-    type: DeviceType.IPHONE,
-    model: "iPhone 13",
-    serial: "FGTY56821K",
-    osVersion: "16.0.3",
-    batteryPercentage: 23,
-    cycleCount: 245,
+    deviceName: "Balli’s iPad",
     isCharging: true,
+    deviceId: "00008103-001E11D41AF1001E",
+    dataSource: "IDevice_Network",
+    deviceModel: "iPad13,8",
+    deviceType: "ipad",
+    batteryLevel: 53,
+    lastUpdate: 1742838675.640888,
   },
   {
-    name: "MacBook Pro",
-    type: DeviceType.MACBOOK,
-    model: 'MacBook Pro 14"',
-    serial: "C02G56HNMD6T",
-    osVersion: "Ventura 13.0",
-    batteryPercentage: 92,
-    cycleCount: 42,
+    deviceName: "Balli’s AirPods Pro (Case)",
+    lastUpdate: 1742838659.5988321,
+    dataSource: "BLE_AirPods",
+    deviceId: "56DC0295-6146-7DB9-294E-BC06053789DE",
+    batteryLevel: 74,
+    deviceType: "airpods_case",
     isCharging: false,
   },
   {
-    name: "iPad Pro",
-    type: DeviceType.IPAD,
-    model: 'iPad Pro 12.9"',
-    serial: "DMPVH8BLLXK1",
-    osVersion: "16.1",
-    batteryPercentage: 65,
-    cycleCount: 89,
-    isCharging: false,
-  },
-  {
-    name: "AirPods Pro",
-    type: DeviceType.AIRPODS,
-    model: "AirPods Pro 2",
-    serial: "GHT789PQR",
-    osVersion: "5B58",
-    batteryPercentage: 0, // Not used for AirPods (use left/right/case instead)
-    cycleCount: 0,
-    leftBatteryPercentage: 35,
-    rightBatteryPercentage: 28,
-    caseBatteryPercentage: 82,
-    isCharging: false,
-    connectedTo: "iPhone 14 Pro",
-    firmware: "5B58",
-    noiseStatus: "On",
-  },
-  {
-    name: "Apple Watch",
-    type: DeviceType.WATCH,
-    model: "Apple Watch Series 8",
-    serial: "GQ7XL4THQ1K6",
-    osVersion: "9.1",
-    batteryPercentage: 12,
-    cycleCount: 56,
+    lastUpdate: 1742838659.5988321,
+    deviceType: "airpods_left",
+    deviceId: "56DC0295-6146-7DB9-294E-BC06053789DE",
+    deviceName: "Balli’s AirPods Pro (Left)",
     isCharging: true,
+    dataSource: "BLE_AirPods",
+    batteryLevel: 100,
   },
   {
-    name: "iPad Mini",
-    type: DeviceType.IPAD,
-    model: "iPad Mini 6",
-    serial: "FTWY16JNLL78",
-    osVersion: "16.0",
-    batteryPercentage: 86,
-    cycleCount: 56,
+    batteryLevel: 100,
+    deviceType: "macbookair",
+    deviceName: "Balli’s MacBook Air",
     isCharging: false,
-  },
-  {
-    name: "MacBook Air",
-    type: DeviceType.MACBOOK,
-    model: "MacBook Air M2",
-    serial: "C02ZW4JPQZ0F",
-    osVersion: "Ventura 13.0",
-    batteryPercentage: 29,
-    cycleCount: 142,
-    isCharging: false,
+    deviceId: "internal",
+    lastUpdate: 1742838676.0385652,
+    dataSource: "Internal",
   },
 ];
 
@@ -103,7 +71,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/devices/type/:type", (req, res) => {
     const { type } = req.params;
     const filteredDevices = mockDevices.filter(
-      (device) => device.type === type
+      (device) => device.deviceType === type
     );
     res.json(filteredDevices);
   });

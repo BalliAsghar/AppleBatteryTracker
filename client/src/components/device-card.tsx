@@ -1,11 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  DeviceIcon,
-  AirpodLeftIcon,
-  AirpodRightIcon,
-  AirpodCaseIcon,
-} from "@/lib/icons";
+import { DeviceIcon } from "@/lib/icons";
 import { BatteryIndicator } from "@/components/battery-indicator";
 import { type Device } from "@shared/schema";
 import { useTheme } from "@/components/ui/theme-provider";
@@ -16,10 +11,7 @@ interface DeviceCardProps {
 
 export function DeviceCard({ device }: DeviceCardProps) {
   const { theme } = useTheme();
-  const isAirPods = device.type === "AirPods";
-
-  const formattedUpdatedAt = new Date(device.updatedAt).getTime();
-  const timeAgo = Math.floor((Date.now() - formattedUpdatedAt) / 60000);
+  const timeAgo = Math.floor((Date.now() - device.lastUpdate * 1000) / 60000);
 
   let updatedText = "Updated just now";
   if (timeAgo === 1) {
@@ -34,7 +26,7 @@ export function DeviceCard({ device }: DeviceCardProps) {
 
   return (
     <Card
-      className={`device-card ${
+      className={`${
         theme === "dark" ? "bg-zinc-800" : "bg-white"
       } rounded-2xl shadow hover:shadow-lg transition-all duration-200 hover:-translate-y-1`}
     >
@@ -46,7 +38,7 @@ export function DeviceCard({ device }: DeviceCardProps) {
                 theme === "dark" ? "text-white" : "text-[#1D1D1F]"
               }`}
             >
-              {device.name}
+              {device.deviceName}
             </h2>
             <p
               className={`text-sm ${
@@ -57,104 +49,19 @@ export function DeviceCard({ device }: DeviceCardProps) {
             </p>
           </div>
           <DeviceIcon
-            type={device.type}
+            type={device.deviceType}
             size={40}
             className={theme === "dark" ? "text-white" : "text-[#1D1D1F]"}
           />
         </div>
 
-        {isAirPods ? (
-          <div className="mt-6 grid grid-cols-3 gap-4">
-            <div>
-              <div className="flex justify-center mb-2">
-                <DeviceIcon
-                  type="airpods.left"
-                  size={20}
-                  className={
-                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                  }
-                />
-              </div>
-              <div className="flex flex-col items-center">
-                <BatteryIndicator
-                  percentage={device.leftBatteryPercentage || 0}
-                  size="sm"
-                  className="mb-1"
-                  isCharging={device.isCharging || false}
-                />
-                <span
-                  className={`text-sm font-medium ${
-                    theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                  }`}
-                >
-                  {device.leftBatteryPercentage}%
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <div className="flex justify-center mb-2">
-                <DeviceIcon
-                  type="airpods.right"
-                  size={20}
-                  className={
-                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                  }
-                />
-              </div>
-              <div className="flex flex-col items-center">
-                <BatteryIndicator
-                  percentage={device.rightBatteryPercentage || 0}
-                  size="sm"
-                  className="mb-1"
-                  isCharging={device.isCharging || false}
-                />
-                <span
-                  className={`text-sm font-medium ${
-                    theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                  }`}
-                >
-                  {device.rightBatteryPercentage}%
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <div className="flex justify-center mb-2">
-                <DeviceIcon
-                  type="airpods.case"
-                  size={20}
-                  className={
-                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                  }
-                />
-              </div>
-              <div className="flex flex-col items-center">
-                <BatteryIndicator
-                  percentage={device.caseBatteryPercentage || 0}
-                  size="sm"
-                  className="mb-1"
-                  isCharging={device.isCharging || false}
-                />
-                <span
-                  className={`text-sm font-medium ${
-                    theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                  }`}
-                >
-                  {device.caseBatteryPercentage}%
-                </span>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="flex items-center mt-6">
-            <BatteryIndicator
-              percentage={device.batteryPercentage}
-              showPercentage={true}
-              isCharging={device.isCharging || false}
-            />
-          </div>
-        )}
+        <div className="flex items-center mt-6">
+          <BatteryIndicator
+            percentage={device.batteryLevel}
+            showPercentage={true}
+            isCharging={device.isCharging}
+          />
+        </div>
 
         <div
           className={`mt-5 pt-5 border-t ${
@@ -175,7 +82,7 @@ export function DeviceCard({ device }: DeviceCardProps) {
                   theme === "dark" ? "text-white" : "text-[#1D1D1F]"
                 } mt-1`}
               >
-                {device.model}
+                {"Unknown"}
               </p>
             </div>
             <div>
@@ -191,114 +98,22 @@ export function DeviceCard({ device }: DeviceCardProps) {
                   theme === "dark" ? "text-white" : "text-[#1D1D1F]"
                 } mt-1`}
               >
-                {device.serial}
+                {device.deviceId.slice(0, 8)}
               </p>
             </div>
-
-            {isAirPods ? (
-              <>
-                <div>
-                  <p
-                    className={`text-xs ${
-                      theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                    }`}
-                  >
-                    Firmware
-                  </p>
-                  <p
-                    className={`text-sm font-medium ${
-                      theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                    } mt-1`}
-                  >
-                    {device.firmware}
-                  </p>
-                </div>
-                <div>
-                  <p
-                    className={`text-xs ${
-                      theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                    }`}
-                  >
-                    Connected to
-                  </p>
-                  <p
-                    className={`text-sm font-medium ${
-                      theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                    } mt-1`}
-                  >
-                    {device.connectedTo}
-                  </p>
-                </div>
-                <div>
-                  <p
-                    className={`text-xs ${
-                      theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                    }`}
-                  >
-                    Noise Cancellation
-                  </p>
-                  <p
-                    className={`text-sm font-medium ${
-                      theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                    } mt-1`}
-                  >
-                    {device.noiseStatus}
-                  </p>
-                </div>
-              </>
-            ) : (
-              <>
-                <div>
-                  <p
-                    className={`text-xs ${
-                      theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                    }`}
-                  >{`${
-                    device.type === "Apple Watch"
-                      ? "watchOS"
-                      : device.type === "MacBook"
-                      ? "macOS"
-                      : device.type + "OS"
-                  } Version`}</p>
-                  <p
-                    className={`text-sm font-medium ${
-                      theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                    } mt-1`}
-                  >
-                    {device.osVersion}
-                  </p>
-                </div>
-                <div>
-                  <p
-                    className={`text-xs ${
-                      theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                    }`}
-                  >
-                    Battery Health
-                  </p>
-                  <p
-                    className={`text-sm font-medium ${
-                      theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                    } mt-1`}
-                  >
-                    Good
-                  </p>
-                </div>
-                {device.batteryPercentage <= 20 && !device.isCharging && (
-                  <div>
-                    <p
-                      className={`text-xs ${
-                        theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                      }`}
-                    >
-                      Status
-                    </p>
-                    <p className="text-sm font-medium text-[#FF3B30] mt-1">
-                      Low Battery
-                    </p>
-                  </div>
-                )}
-              </>
+            {device.batteryLevel <= 20 && !device.isCharging && (
+              <div>
+                <p
+                  className={`text-xs ${
+                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
+                  }`}
+                >
+                  Status
+                </p>
+                <p className="text-sm font-medium text-[#FF3B30] mt-1">
+                  Low Battery
+                </p>
+              </div>
             )}
           </div>
         </div>

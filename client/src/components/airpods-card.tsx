@@ -1,0 +1,191 @@
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { DeviceIcon } from "@/lib/icons";
+import { BatteryIndicator } from "@/components/battery-indicator";
+import { type Device } from "@shared/schema";
+import { useTheme } from "@/components/ui/theme-provider";
+
+interface AirpodsCardProps {
+  leftPod: Device;
+  rightPod: Device;
+  case: Device;
+}
+
+export function AirpodsCard({
+  leftPod,
+  rightPod,
+  case: airpodsCase,
+}: AirpodsCardProps) {
+  const { theme } = useTheme();
+  const baseDeviceName = leftPod.deviceName.replace(" (Left)", "");
+  const timeAgo = Math.floor((Date.now() - leftPod.lastUpdate * 1000) / 60000);
+
+  let updatedText = "Updated just now";
+  if (timeAgo === 1) {
+    updatedText = "Updated 1 minute ago";
+  } else if (timeAgo > 1 && timeAgo < 60) {
+    updatedText = `Updated ${timeAgo} minutes ago`;
+  } else if (timeAgo >= 60 && timeAgo < 120) {
+    updatedText = "Updated 1 hour ago";
+  } else if (timeAgo >= 120) {
+    updatedText = `Updated ${Math.floor(timeAgo / 60)} hours ago`;
+  }
+
+  return (
+    <Card
+      className={`${
+        theme === "dark" ? "bg-zinc-800" : "bg-white"
+      } rounded-2xl shadow hover:shadow-lg transition-all duration-200 hover:-translate-y-1`}
+    >
+      <CardContent className="p-6">
+        <div className="flex items-start justify-between">
+          <div>
+            <h2
+              className={`text-lg font-semibold ${
+                theme === "dark" ? "text-white" : "text-[#1D1D1F]"
+              }`}
+            >
+              {baseDeviceName}
+            </h2>
+            <p
+              className={`text-sm ${
+                theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
+              } mt-1`}
+            >
+              {updatedText}
+            </p>
+          </div>
+          <DeviceIcon
+            type="airpods"
+            size={40}
+            className={theme === "dark" ? "text-white" : "text-[#1D1D1F]"}
+          />
+        </div>
+
+        <div className="mt-6 grid grid-cols-3 gap-4">
+          <div>
+            <div className="flex justify-center mb-2">
+              <DeviceIcon
+                type="airpods_left"
+                size={20}
+                className={
+                  theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
+                }
+              />
+            </div>
+            <div className="flex flex-col items-center">
+              <BatteryIndicator
+                percentage={leftPod.batteryLevel}
+                size="sm"
+                className="mb-1"
+                isCharging={leftPod.isCharging}
+              />
+              <span
+                className={`text-sm font-medium ${
+                  theme === "dark" ? "text-white" : "text-[#1D1D1F]"
+                }`}
+              >
+                {leftPod.batteryLevel}%
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <div className="flex justify-center mb-2">
+              <DeviceIcon
+                type="airpods_right"
+                size={20}
+                className={
+                  theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
+                }
+              />
+            </div>
+            <div className="flex flex-col items-center">
+              <BatteryIndicator
+                percentage={rightPod.batteryLevel}
+                size="sm"
+                className="mb-1"
+                isCharging={rightPod.isCharging}
+              />
+              <span
+                className={`text-sm font-medium ${
+                  theme === "dark" ? "text-white" : "text-[#1D1D1F]"
+                }`}
+              >
+                {rightPod.batteryLevel}%
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <div className="flex justify-center mb-2">
+              <DeviceIcon
+                type="airpods_case"
+                size={20}
+                className={
+                  theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
+                }
+              />
+            </div>
+            <div className="flex flex-col items-center">
+              <BatteryIndicator
+                percentage={airpodsCase.batteryLevel}
+                size="sm"
+                className="mb-1"
+                isCharging={airpodsCase.isCharging}
+              />
+              <span
+                className={`text-sm font-medium ${
+                  theme === "dark" ? "text-white" : "text-[#1D1D1F]"
+                }`}
+              >
+                {airpodsCase.batteryLevel}%
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className={`mt-5 pt-5 border-t ${
+            theme === "dark" ? "border-zinc-700" : "border-gray-100"
+          }`}
+        >
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <p
+                className={`text-xs ${
+                  theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
+                }`}
+              >
+                Model
+              </p>
+              <p
+                className={`text-sm font-medium ${
+                  theme === "dark" ? "text-white" : "text-[#1D1D1F]"
+                } mt-1`}
+              >
+                AirPods Pro
+              </p>
+            </div>
+            <div>
+              <p
+                className={`text-xs ${
+                  theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
+                }`}
+              >
+                Serial
+              </p>
+              <p
+                className={`text-sm font-medium ${
+                  theme === "dark" ? "text-white" : "text-[#1D1D1F]"
+                } mt-1`}
+              >
+                {leftPod.deviceId.slice(0, 8)}
+              </p>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

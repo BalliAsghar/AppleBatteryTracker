@@ -23,20 +23,31 @@ export default function Dashboard() {
     if (activeTab === "all") {
       setFilteredDevices(devices);
     } else {
-      setFilteredDevices(devices.filter((device) => device.type === activeTab));
+      setFilteredDevices(
+        devices.filter((device) => device.deviceType === activeTab)
+      );
     }
   }, [activeTab, devices]);
 
   return (
-    <div className={`min-h-screen flex flex-col ${theme === 'dark' ? 'bg-zinc-900 text-white' : 'bg-slate-50 text-black'} transition-colors duration-300`}>
+    <div
+      className={`min-h-screen flex flex-col ${
+        theme === "dark" ? "bg-zinc-900 text-white" : "bg-slate-50 text-black"
+      } transition-colors duration-300`}
+    >
       <Header />
       <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-      
+
       {isLoading ? (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className={`rounded-2xl ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white'} shadow p-6 transition-colors duration-300`}>
+              <div
+                key={i}
+                className={`rounded-2xl ${
+                  theme === "dark" ? "bg-zinc-800" : "bg-white"
+                } shadow p-6 transition-colors duration-300`}
+              >
                 <div className="flex justify-between">
                   <div className="space-y-2">
                     <Skeleton className="h-5 w-32" />
@@ -64,7 +75,7 @@ export default function Dashboard() {
       ) : (
         <DeviceGrid devices={filteredDevices} />
       )}
-      
+
       <div className="flex-grow" />
       <Footer />
     </div>

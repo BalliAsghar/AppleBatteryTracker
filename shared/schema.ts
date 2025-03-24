@@ -1,51 +1,38 @@
 import {
   pgTable,
   text,
-  serial,
   integer,
   boolean,
-  timestamp,
+  doublePrecision,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Define device type enum
 export const DeviceType = {
-  IPHONE: "iPhone",
-  IPAD: "iPad",
-  MACBOOK: "MacBook",
-  AIRPODS: "AirPods",
-  WATCH: "Apple Watch",
+  IPHONE: "iphone",
+  IPAD: "ipad",
+  MACBOOK: "macbookair", // Changed to macbookair to match data
+  AIRPODS_LEFT: "airpods_left",
+  AIRPODS_RIGHT: "airpods_right",
+  AIRPODS_CASE: "airpods_case",
+  WATCH: "applewatch", // Removed WATCH type as per new schema
 } as const;
 
 export type DeviceTypeValues = (typeof DeviceType)[keyof typeof DeviceType];
 
 // Devices table
 export const devices = pgTable("devices", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  type: text("type").notNull(), // iPhone, iPad, MacBook, AirPods, Apple Watch
-  model: text("model").notNull(),
-  serial: text("serial").notNull(),
-  osVersion: text("os_version").notNull(),
-  batteryPercentage: integer("battery_percentage").notNull(),
-  cycleCount: integer("cycle_count").notNull(),
-  isCharging: boolean("is_charging").default(false),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  // For AirPods additional battery levels
-  caseBatteryPercentage: integer("case_battery_percentage"),
-  leftBatteryPercentage: integer("left_battery_percentage"),
-  rightBatteryPercentage: integer("right_battery_percentage"),
-  // Additional device info
-  connectedTo: text("connected_to"),
-  firmware: text("firmware"),
-  noiseStatus: text("noise_status"),
+  deviceId: text("device_id").notNull().primaryKey(),
+  deviceName: text("device_name").notNull(),
+  deviceType: text("device_type").notNull(), // Using text to store enum values
+  batteryLevel: integer("battery_level").notNull(),
+  isCharging: boolean("is_charging").default(false).notNull(),
+  dataSource: text("data_source").notNull(),
+  lastUpdate: doublePrecision("last_update").notNull(), // Using double precision for timestamp
 });
 
-export const insertDeviceSchema = createInsertSchema(devices).omit({
-  id: true,
-  updatedAt: true,
-});
+export const insertDeviceSchema = createInsertSchema(devices);
 
 export type InsertDevice = z.infer<typeof insertDeviceSchema>;
 export type Device = typeof devices.$inferSelect;
