@@ -21,10 +21,10 @@ export function DeviceCard({ device }: DeviceCardProps) {
       } rounded-2xl shadow hover:shadow-lg transition-all duration-200 hover:-translate-y-1`}
     >
       <CardContent className="p-6">
-        <div className="flex items-start justify-between">
-          <div>
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0 flex-1">
             <h2
-              className={`text-lg font-semibold ${
+              className={`text-lg font-semibold truncate ${
                 theme === "dark" ? "text-white" : "text-[#1D1D1F]"
               }`}
             >
@@ -38,10 +38,12 @@ export function DeviceCard({ device }: DeviceCardProps) {
               {updatedText}
             </p>
           </div>
-          {getIcon(device.deviceType, {
-            size: 40,
-            className: theme === "dark" ? "text-white" : "text-[#1D1D1F]",
-          })}
+          <div className="flex-shrink-0">
+            {getIcon(device.deviceType, {
+              size: 40,
+              className: theme === "dark" ? "text-white" : "text-[#1D1D1F]",
+            })}
+          </div>
         </div>
 
         <div
