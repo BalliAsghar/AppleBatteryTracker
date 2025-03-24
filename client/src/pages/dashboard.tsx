@@ -1,33 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { TabNavigation } from "@/components/tab-navigation";
 import { DeviceGrid } from "@/components/device-grid";
 import { useQuery } from "@tanstack/react-query";
-import { Device, DeviceType } from "@shared/schema";
+import { Device } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTheme } from "@/components/ui/theme-provider";
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState("all");
-  const [filteredDevices, setFilteredDevices] = useState<Device[]>([]);
   const { theme } = useTheme();
-
   const { data: devices, isLoading } = useQuery<Device[]>({
     queryKey: ["/api/devices"],
   });
-
-  useEffect(() => {
-    if (!devices) return;
-
-    if (activeTab === "all") {
-      setFilteredDevices(devices);
-    } else {
-      setFilteredDevices(
-        devices.filter((device) => device.deviceType === activeTab)
-      );
-    }
-  }, [activeTab, devices]);
 
   return (
     <div
@@ -36,7 +20,6 @@ export default function Dashboard() {
       } transition-colors duration-300`}
     >
       <Header />
-      <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {isLoading ? (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -73,7 +56,7 @@ export default function Dashboard() {
           </div>
         </div>
       ) : (
-        <DeviceGrid devices={filteredDevices} />
+        <DeviceGrid devices={devices || []} />
       )}
 
       <div className="flex-grow" />
