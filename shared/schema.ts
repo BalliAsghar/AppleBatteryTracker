@@ -16,7 +16,6 @@ export const DeviceType = {
   AIRPODS_LEFT: "airpods_left",
   AIRPODS_RIGHT: "airpods_right",
   AIRPODS_CASE: "airpods_case",
-  WATCH: "applewatch", // Removed WATCH type as per new schema
 } as const;
 
 export type DeviceTypeValues = (typeof DeviceType)[keyof typeof DeviceType];

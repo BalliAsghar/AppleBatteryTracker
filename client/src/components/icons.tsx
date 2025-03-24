@@ -1,5 +1,4 @@
 import React from "react";
-import { SVGDeviceIcon } from "@/components/svg-device-icon";
 
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
@@ -130,7 +129,10 @@ export const AirpodsIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
   </svg>
 );
 
-export const AirpodLeftIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
+export const AirpodLeftIcon: React.FC<IconProps> = ({
+  size = 24,
+  ...props
+}) => (
   <svg
     width={size}
     height={size}
@@ -156,7 +158,10 @@ export const AirpodLeftIcon: React.FC<IconProps> = ({ size = 24, ...props }) => 
   </svg>
 );
 
-export const AirpodRightIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
+export const AirpodRightIcon: React.FC<IconProps> = ({
+  size = 24,
+  ...props
+}) => (
   <svg
     width={size}
     height={size}
@@ -182,7 +187,10 @@ export const AirpodRightIcon: React.FC<IconProps> = ({ size = 24, ...props }) =>
   </svg>
 );
 
-export const AirpodCaseIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
+export const AirpodCaseIcon: React.FC<IconProps> = ({
+  size = 24,
+  ...props
+}) => (
   <svg
     width={size}
     height={size}
@@ -253,14 +261,54 @@ export const SunIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
     {...props}
   >
     <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M12 2V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M12 20V22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M4 12L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M22 12L20 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M19.7778 4.22266L17.5558 6.25424" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M4.22217 4.22266L6.44418 6.25424" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M6.44434 17.5557L4.22211 19.7779" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M19.7778 19.7773L17.5558 17.5551" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path
+      d="M12 2V4"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M12 20V22"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M4 12L2 12"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M22 12L20 12"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M19.7778 4.22266L17.5558 6.25424"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M4.22217 4.22266L6.44418 6.25424"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M6.44434 17.5557L4.22211 19.7779"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M19.7778 19.7773L17.5558 17.5551"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
@@ -283,8 +331,28 @@ export const MoonIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
   </svg>
 );
 
-export const DeviceIcon = ({ type, size = 24, ...props }: { type: string } & IconProps) => {
-  // Return the SVG device icon component that will handle loading the external SVG files
-  // The component will handle error states internally and display the right icon
-  return <SVGDeviceIcon type={type} size={size} className={props.className} />;
+// Added new function to determine which Component icon to use
+export const getIcon = (type: string, { size = 24, ...props }: IconProps) => {
+  switch (type) {
+    case "iphone":
+      return <PhoneIcon size={size} {...props} />;
+    case "ipad":
+      return <TabletIcon size={size} {...props} />;
+    case "macbookair":
+      return <LaptopIcon size={size} {...props} />;
+    case "airpods":
+      return <AirpodsIcon size={size} {...props} />;
+    case "airpods_left":
+      return <AirpodLeftIcon size={size} {...props} />;
+    case "airpods_right":
+      return <AirpodRightIcon size={size} {...props} />;
+    case "airpods_case":
+      return <AirpodCaseIcon size={size} {...props} />;
+    case "moon":
+      return <MoonIcon size={size} {...props} />;
+    case "sun":
+      return <SunIcon size={size} {...props} />;
+    default:
+      return <AppleIcon size={size} {...props} />;
+  }
 };

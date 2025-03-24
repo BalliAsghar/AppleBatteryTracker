@@ -1,9 +1,8 @@
 import React from "react";
-import { SunIcon, MoonIcon } from "@/lib/icons";
 import { useTheme } from "@/components/ui/theme-provider";
 import { motion } from "framer-motion";
-import { SVGDeviceIcon } from "./svg-device-icon";
 import { Button } from "./ui/button";
+import { getIcon } from "./icons";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -28,7 +27,10 @@ export function ThemeToggle() {
             exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <SVGDeviceIcon type="sun" className="absolute inset-0" size={24} />
+            {getIcon("sun", {
+              size: 24,
+              className: "absolute inset-0",
+            })}
           </motion.div>
         ) : (
           <motion.div
@@ -37,7 +39,10 @@ export function ThemeToggle() {
             exit={{ opacity: 0, rotate: -90, scale: 0.5 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <SVGDeviceIcon type="moon" className="absolute inset-0" size={24} />
+            {getIcon("moon", {
+              size: 24,
+              className: "absolute inset-0",
+            })}
           </motion.div>
         )}
       </div>

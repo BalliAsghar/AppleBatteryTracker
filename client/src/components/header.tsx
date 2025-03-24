@@ -1,11 +1,11 @@
 import React from "react";
-import { AppleIcon } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { useQueryClient } from "@tanstack/react-query";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useTheme } from "@/components/ui/theme-provider";
+import { AppleIcon } from "./icons";
 
 export function Header() {
   const { toast } = useToast();

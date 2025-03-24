@@ -1,10 +1,10 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { DeviceIcon } from "@/lib/icons";
 import { BatteryIndicator } from "@/components/battery-indicator";
 import { type Device } from "@shared/schema";
 import { useTheme } from "@/components/ui/theme-provider";
 import { formatLastUpdate } from "@/lib/utils";
+import { getIcon } from "./icons";
 
 interface AirpodsCardProps {
   leftPod: Device;
@@ -45,11 +45,10 @@ export function AirpodsCard({
               {updatedText}
             </p>
           </div>
-          <DeviceIcon
-            type="airpods"
-            size={40}
-            className={theme === "dark" ? "text-white" : "text-[#1D1D1F]"}
-          />
+          {getIcon("airpods", {
+            size: 40,
+            className: theme === "dark" ? "text-white" : "text-[#1D1D1F]",
+          })}
         </div>
 
         <div
@@ -60,13 +59,11 @@ export function AirpodsCard({
           <div className="grid grid-cols-3 gap-4">
             <div>
               <div className="flex justify-center mb-2">
-                <DeviceIcon
-                  type="airpods_left"
-                  size={20}
-                  className={
-                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                  }
-                />
+                {getIcon("airpods_left", {
+                  size: 20,
+                  className:
+                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]",
+                })}
               </div>
               <div className="flex flex-col items-center">
                 <BatteryIndicator
@@ -87,13 +84,11 @@ export function AirpodsCard({
 
             <div>
               <div className="flex justify-center mb-2">
-                <DeviceIcon
-                  type="airpods_right"
-                  size={20}
-                  className={
-                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                  }
-                />
+                {getIcon("airpods_right", {
+                  size: 20,
+                  className:
+                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]",
+                })}
               </div>
               <div className="flex flex-col items-center">
                 <BatteryIndicator
@@ -114,13 +109,11 @@ export function AirpodsCard({
 
             <div>
               <div className="flex justify-center mb-2">
-                <DeviceIcon
-                  type="airpods_case"
-                  size={20}
-                  className={
-                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-                  }
-                />
+                {getIcon("airpods_case", {
+                  size: 20,
+                  className:
+                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]",
+                })}
               </div>
               <div className="flex flex-col items-center">
                 <BatteryIndicator

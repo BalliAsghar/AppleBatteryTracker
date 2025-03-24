@@ -1,10 +1,10 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { DeviceIcon } from "@/lib/icons";
 import { BatteryIndicator } from "@/components/battery-indicator";
 import { type Device } from "@shared/schema";
 import { useTheme } from "@/components/ui/theme-provider";
 import { formatLastUpdate } from "@/lib/utils";
+import { getIcon } from "./icons";
 
 interface DeviceCardProps {
   device: Device;
@@ -38,11 +38,10 @@ export function DeviceCard({ device }: DeviceCardProps) {
               {updatedText}
             </p>
           </div>
-          <DeviceIcon
-            type={device.deviceType}
-            size={40}
-            className={theme === "dark" ? "text-white" : "text-[#1D1D1F]"}
-          />
+          {getIcon(device.deviceType, {
+            size: 40,
+            className: theme === "dark" ? "text-white" : "text-[#1D1D1F]",
+          })}
         </div>
 
         <div
