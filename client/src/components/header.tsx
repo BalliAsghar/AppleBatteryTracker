@@ -1,38 +1,12 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
 import { useQueryClient } from "@tanstack/react-query";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useTheme } from "@/components/ui/theme-provider";
 import { AppleIcon } from "./icons";
 
 export function Header() {
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
   const { theme } = useTheme();
-
-  const handleRefresh = async () => {
-    try {
-      await apiRequest("POST", "/api/devices/refresh", {});
-
-      // Invalidate and refetch
-      await queryClient.invalidateQueries({ queryKey: ["/api/devices"] });
-
-      toast({
-        title: "Refreshed",
-        description: "Battery data has been updated",
-        duration: 3000,
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to refresh battery data",
-        variant: "destructive",
-        duration: 3000,
-      });
-    }
-  };
 
   return (
     <header

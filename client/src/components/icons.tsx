@@ -186,10 +186,10 @@ export const AirpodCaseIcon: React.FC<IconProps> = ({
   </svg>
 );
 
-export const SunIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
+export const SunIcon: React.FC<IconProps> = ({ size = 32, ...props }) => (
   <svg
-    width={size}
-    height={size}
+    width={32}
+    height={32}
     viewBox="0 0 68.1396 67.9932"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -209,10 +209,10 @@ export const SunIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
   </svg>
 );
 
-export const MoonIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
+export const MoonIcon: React.FC<IconProps> = ({ size = 32, ...props }) => (
   <svg
-    width={size}
-    height={size}
+    width={32}
+    height={32}
     viewBox="0 0 62.9395 63.1592"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

@@ -28,7 +28,7 @@ export function ThemeToggle() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
             {getIcon("sun", {
-              size: 24,
+              size: 100,
               className: "absolute inset-0",
             })}
           </motion.div>
@@ -40,7 +40,7 @@ export function ThemeToggle() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
             {getIcon("moon", {
-              size: 24,
+              size: 100,
               className: "absolute inset-0",
             })}
           </motion.div>
