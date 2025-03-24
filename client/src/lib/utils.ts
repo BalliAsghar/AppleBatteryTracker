@@ -1,6 +1,11 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { format, formatDistanceToNow } from "date-fns";
+import {
+  format,
+  formatDistanceToNow,
+  formatRelative,
+  fromUnixTime,
+} from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -30,10 +35,6 @@ export function formatDate(date: Date): string {
   return format(date, "MMM d, yyyy");
 }
 
-export function formatTimeAgo(date: Date): string {
-  const timeAgo = formatDistanceToNow(date, { addSuffix: false });
-  if (timeAgo === 'less than a minute') {
-    return 'just now';
-  }
-  return `Updated ${timeAgo} ago`;
+export function formatLastUpdate(timestamp: number): string {
+  return formatRelative(fromUnixTime(timestamp), new Date());
 }

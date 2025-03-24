@@ -4,6 +4,7 @@ import { DeviceIcon } from "@/lib/icons";
 import { BatteryIndicator } from "@/components/battery-indicator";
 import { type Device } from "@shared/schema";
 import { useTheme } from "@/components/ui/theme-provider";
+import { formatLastUpdate } from "@/lib/utils";
 
 interface AirpodsCardProps {
   leftPod: Device;
@@ -18,18 +19,7 @@ export function AirpodsCard({
 }: AirpodsCardProps) {
   const { theme } = useTheme();
   const baseDeviceName = leftPod.deviceName.replace(" (Left)", "");
-  const timeAgo = Math.floor((Date.now() - leftPod.lastUpdate * 1000) / 60000);
-
-  let updatedText = "Updated just now";
-  if (timeAgo === 1) {
-    updatedText = "Updated 1 minute ago";
-  } else if (timeAgo > 1 && timeAgo < 60) {
-    updatedText = `Updated ${timeAgo} minutes ago`;
-  } else if (timeAgo >= 60 && timeAgo < 120) {
-    updatedText = "Updated 1 hour ago";
-  } else if (timeAgo >= 120) {
-    updatedText = `Updated ${Math.floor(timeAgo / 60)} hours ago`;
-  }
+  const updatedText = formatLastUpdate(leftPod.lastUpdate);
 
   return (
     <Card
