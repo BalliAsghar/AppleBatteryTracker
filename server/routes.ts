@@ -7,7 +7,7 @@ import { homedir } from "os";
 async function readBatteryData() {
   try {
     const data = await fs.readFile(
-      `${path.join(homedir(), ".local/share", "batteries", "Batteries.json")}`,
+      `${path.join(homedir(), ".local/share", "batteries", "Batteries1.json")}`,
       "utf8"
     );
     return JSON.parse(data);

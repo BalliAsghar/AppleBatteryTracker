@@ -50,13 +50,19 @@ export function DeviceCard({ device }: DeviceCardProps) {
             theme === "dark" ? "border-zinc-700" : "border-gray-100"
           }`}
         >
-          <div className="flex justify-center items-center">
+          <div className="flex flex-col items-center">
             <BatteryIndicator
               percentage={device.batteryLevel}
-              showPercentage={true}
               isCharging={device.isCharging}
               size="lg"
             />
+            <span
+              className={`text-sm font-medium ${
+                theme === "dark" ? "text-white" : "text-[#1D1D1F]"
+              }`}
+            >
+              {device.batteryLevel}%
+            </span>
           </div>
           {device.batteryLevel <= 20 && !device.isCharging && (
             <p className="text-sm font-medium text-[#FF3B30] mt-4 text-center">
