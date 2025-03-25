@@ -6,10 +6,12 @@ import { homedir } from "os";
 
 async function readBatteryData() {
   try {
-    const data = await fs.readFile(
-      `${path.join(homedir(), ".local/share", "batteries", "Batteries.json")}`,
-      "utf8"
-    );
+    const filePath =
+      process.env.NODE_ENV === "production"
+        ? "/Batteries.json"
+        : path.join(homedir(), ".local/share", "batteries", "Batteries.json");
+
+    const data = await fs.readFile(filePath, "utf8");
     return JSON.parse(data);
   } catch (error) {
     console.error("Error reading battery data:", error);
