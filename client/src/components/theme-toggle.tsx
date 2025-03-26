@@ -27,26 +27,6 @@ export function ThemeToggle() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="w-full h-full flex items-center justify-center"
           >
-            {/* Moon */}
-            <svg
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full block"
-            >
-              <path
-                fill="currentColor"
-                d="M12 22c5.523 0 10-4.477 10-10c0-.463-.694-.54-.933-.143a6.5 6.5 0 1 1-8.924-8.924C12.54 2.693 12.463 2 12 2C6.477 2 2 6.477 2 12s4.477 10 10 10"
-              />
-            </svg>
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, rotate: 90, scale: 0.5 }}
-            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-            exit={{ opacity: 0, rotate: -90, scale: 0.5 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-full h-full flex items-center justify-center"
-          >
             {/* Sun */}
             <svg
               viewBox="0 0 24 24"
@@ -62,6 +42,26 @@ export function ThemeToggle() {
                 fillRule="evenodd"
                 d="M12 1.25a.75.75 0 0 1 .75.75v1a.75.75 0 0 1-1.5 0V2a.75.75 0 0 1 .75-.75M4.399 4.399a.75.75 0 0 1 1.06 0l.393.392a.75.75 0 0 1-1.06 1.061l-.393-.393a.75.75 0 0 1 0-1.06m15.202 0a.75.75 0 0 1 0 1.06l-.393.393a.75.75 0 0 1-1.06-1.06l.393-.393a.75.75 0 0 1 1.06 0M1.25 12a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 0 1.5H2a.75.75 0 0 1-.75-.75m19 0a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 0 1.5h-1a.75.75 0 0 1-.75-.75m-2.102 6.148a.75.75 0 0 1 1.06 0l.393.393a.75.75 0 1 1-1.06 1.06l-.393-.393a.75.75 0 0 1 0-1.06m-12.296 0a.75.75 0 0 1 0 1.06l-.393.393a.75.75 0 1 1-1.06-1.06l.392-.393a.75.75 0 0 1 1.061 0M12 20.25a.75.75 0 0 1 .75.75v1a.75.75 0 0 1-1.5 0v-1a.75.75 0 0 1 .75-.75"
                 clipRule="evenodd"
+              />
+            </svg>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, rotate: 90, scale: 0.5 }}
+            animate={{ opacity: 1, rotate: 0, scale: 1 }}
+            exit={{ opacity: 0, rotate: -90, scale: 0.5 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="w-full h-full flex items-center justify-center"
+          >
+            {/* Moon */}
+            <svg
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-full block"
+            >
+              <path
+                fill="currentColor"
+                d="M12 22c5.523 0 10-4.477 10-10c0-.463-.694-.54-.933-.143a6.5 6.5 0 1 1-8.924-8.924C12.54 2.693 12.463 2 12 2C6.477 2 2 6.477 2 12s4.477 10 10 10"
               />
             </svg>
           </motion.div>
