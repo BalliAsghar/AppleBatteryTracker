@@ -1,10 +1,9 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { BatteryIndicator } from "@/components/battery-indicator";
 import { type Device } from "@shared/schema";
 import { useTheme } from "@/components/ui/theme-provider";
 import { formatLastUpdate } from "@/lib/utils";
-import { getIcon } from "./icons";
+import { getIcon, getBatteryIconType } from "./icons";
 
 interface DeviceCardProps {
   device: Device;
@@ -13,6 +12,10 @@ interface DeviceCardProps {
 export function DeviceCard({ device }: DeviceCardProps) {
   const { theme } = useTheme();
   const updatedText = formatLastUpdate(device.lastUpdate);
+  const batteryIconType = getBatteryIconType(
+    device.batteryLevel,
+    device.isCharging
+  );
 
   return (
     <Card
@@ -63,13 +66,24 @@ export function DeviceCard({ device }: DeviceCardProps) {
           } transition-colors duration-300`}
         >
           <div className="flex flex-col items-center">
-            <div className="transform group-hover:scale-105 transition-transform duration-300">
-              <BatteryIndicator
-                percentage={device.batteryLevel}
-                isCharging={device.isCharging}
-                size="lg"
-                showPercentage
-              />
+            <div className="transform group-hover:scale-105 transition-transform duration-300 flex items-center">
+              {getIcon(batteryIconType, {
+                size: 40,
+                className: device.isCharging
+                  ? "text-green-500"
+                  : device.batteryLevel <= 20
+                  ? "text-red-500"
+                  : theme === "dark"
+                  ? "text-white"
+                  : "text-[#1D1D1F]",
+              })}
+              <span
+                className={`ml-2 text-lg font-medium ${
+                  theme === "dark" ? "text-white" : "text-[#1D1D1F]"
+                } transition-colors duration-300`}
+              >
+                {device.batteryLevel}%
+              </span>
             </div>
           </div>
           {device.batteryLevel <= 20 && !device.isCharging && (

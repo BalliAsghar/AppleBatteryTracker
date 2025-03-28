@@ -1,10 +1,9 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { BatteryIndicator } from "@/components/battery-indicator";
 import { type Device } from "@shared/schema";
 import { useTheme } from "@/components/ui/theme-provider";
 import { formatLastUpdate } from "@/lib/utils";
-import { getIcon } from "./icons";
+import { getIcon, getBatteryIconType } from "./icons";
 
 interface AirpodsCardProps {
   leftPod: Device;
@@ -85,16 +84,23 @@ export function AirpodsCard({
                   })}
                 </div>
                 <div className="flex flex-col items-center transform group-hover:scale-105 transition-transform duration-300">
-                  <BatteryIndicator
-                    percentage={device.batteryLevel}
-                    size="sm"
-                    className="mb-1"
-                    isCharging={device.isCharging}
-                  />
+                  {getIcon(
+                    getBatteryIconType(device.batteryLevel, device.isCharging),
+                    {
+                      size: 24,
+                      className: device.isCharging
+                        ? "text-green-500"
+                        : device.batteryLevel <= 20
+                        ? "text-red-500"
+                        : theme === "dark"
+                        ? "text-white"
+                        : "text-[#1D1D1F]",
+                    }
+                  )}
                   <span
                     className={`text-sm font-medium ${
                       theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                    } group-hover/item:text-primary transition-colors duration-300`}
+                    } group-hover/item:text-primary transition-colors duration-300 mt-1`}
                   >
                     {device.batteryLevel}%
                   </span>
