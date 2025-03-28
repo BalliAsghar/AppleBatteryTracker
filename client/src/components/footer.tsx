@@ -22,26 +22,6 @@ export function Footer() {
           >
             Battery Dashboard for Apple Devices
           </p>
-          {/* <div className="flex items-center mt-4 md:mt-0">
-            <Button 
-              variant="link" 
-              className={`text-sm ${theme === 'dark' ? 'text-zinc-400 hover:text-white' : 'text-[#86868B] hover:text-[#1D1D1F]'}`}
-            >
-              Privacy Policy
-            </Button>
-            <Button 
-              variant="link" 
-              className={`text-sm ${theme === 'dark' ? 'text-zinc-400 hover:text-white' : 'text-[#86868B] hover:text-[#1D1D1F]'}`}
-            >
-              Terms of Use
-            </Button>
-            <Button 
-              variant="link" 
-              className={`text-sm ${theme === 'dark' ? 'text-zinc-400 hover:text-white' : 'text-[#86868B] hover:text-[#1D1D1F]'}`}
-            >
-              Help
-            </Button>
-          </div> */}
         </div>
       </div>
     </footer>
