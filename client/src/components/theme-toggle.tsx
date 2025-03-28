@@ -9,16 +9,16 @@ export function ThemeToggle() {
   return (
     <Button
       variant="ghost"
-      size="icon"
+      size="iconLg"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className={`rounded-full h-10 w-10 ${
+      className={`rounded-full ${
         theme === "dark"
-          ? "text-white hover:text-white hover:bg-zinc-800"
+          ? "text-white hover:text-white hover:text-white hover:bg-zinc-800"
           : "text-[#1D1D1F] hover:text-[#1D1D1F] hover:bg-gray-100"
       }`}
       aria-label="Toggle theme"
     >
-      <div className="relative w-8 h-8 flex items-center justify-center">
+      <div className="relative w-10 h-10 flex items-center justify-center">
         {theme === "dark" ? (
           <motion.div
             initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
