@@ -2,6 +2,7 @@ import React from "react";
 import { DeviceCard } from "@/components/device-card";
 import { AirpodsCard } from "@/components/airpods-card";
 import { type Device } from "@shared/schema";
+import { motion } from "framer-motion";
 
 interface DeviceGridProps {
   devices: Device[];
@@ -32,33 +33,54 @@ export function DeviceGrid({ devices }: DeviceGridProps) {
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {Object.values(airpodsGroups).length > 0 && (
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {Object.values(airpodsGroups).map((group) => {
+            {Object.values(airpodsGroups).map((group, index) => {
               if (group.left && group.right && group.case) {
                 return (
-                  <AirpodsCard
+                  <motion.div
                     key={group.left.deviceId}
-                    leftPod={group.left}
-                    rightPod={group.right}
-                    case={group.case}
-                  />
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                  >
+                    <AirpodsCard
+                      leftPod={group.left}
+                      rightPod={group.right}
+                      case={group.case}
+                    />
+                  </motion.div>
                 );
               }
               return null;
             })}
           </div>
-        </section>
+        </motion.section>
       )}
 
       {otherDevices.length > 0 && (
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+        >
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {otherDevices.map((device) => (
-              <DeviceCard key={device.deviceId} device={device} />
+            {otherDevices.map((device, index) => (
+              <motion.div
+                key={device.deviceId}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
+              >
+                <DeviceCard device={device} />
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
       )}
     </main>
   );
