@@ -23,120 +23,90 @@ export function AirpodsCard({
 
   return (
     <Card
-      className={`${
-        theme === "dark" ? "bg-zinc-800" : "bg-white"
-      } rounded-2xl shadow hover:shadow-lg transition-all duration-200 hover:-translate-y-1`}
+      className={`group relative overflow-hidden ${
+        theme === "dark"
+          ? "bg-zinc-800/50 hover:bg-zinc-800/80"
+          : "bg-white/50 hover:bg-white/80"
+      } backdrop-blur-xl rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-transparent ${
+        theme === "dark"
+          ? "hover:border-zinc-700/50"
+          : "hover:border-gray-200/50"
+      }`}
     >
-      <CardContent className="p-6">
+      {/* Background gradient effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+      <CardContent className="relative p-6">
         <div className="flex items-start justify-between">
           <div>
             <h2
               className={`text-lg font-semibold ${
                 theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-              }`}
+              } group-hover:text-primary transition-colors duration-300`}
             >
               {baseDeviceName}
             </h2>
             <p
               className={`text-sm ${
                 theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
-              } mt-1`}
+              } mt-1 transition-colors duration-300`}
             >
               {updatedText}
             </p>
           </div>
-          {getIcon("airpods", {
-            size: 40,
-            className: theme === "dark" ? "text-white" : "text-[#1D1D1F]",
-          })}
+          <div className="transform group-hover:scale-110 transition-transform duration-300">
+            {getIcon("airpods", {
+              size: 40,
+              className: `${
+                theme === "dark" ? "text-white" : "text-[#1D1D1F]"
+              } group-hover:text-primary transition-colors duration-300`,
+            })}
+          </div>
         </div>
 
         <div
           className={`mt-5 pt-5 border-t ${
-            theme === "dark" ? "border-zinc-700" : "border-gray-100"
-          }`}
+            theme === "dark" ? "border-zinc-700/50" : "border-gray-100"
+          } transition-colors duration-300`}
         >
           <div className="grid grid-cols-3 gap-4">
-            <div>
-              <div className="flex justify-center mb-2">
-                {getIcon("airpods_left", {
-                  size: 20,
-                  className:
-                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]",
-                })}
+            {[
+              { device: leftPod, icon: "airpods_left" },
+              { device: rightPod, icon: "airpods_right" },
+              { device: airpodsCase, icon: "airpods_case" },
+            ].map(({ device, icon }) => (
+              <div key={device.deviceId} className="group/item">
+                <div className="flex justify-center mb-2">
+                  {getIcon(icon, {
+                    size: 20,
+                    className: `${
+                      theme === "dark" ? "text-zinc-400" : "text-[#86868B]"
+                    } group-hover/item:text-primary transition-colors duration-300`,
+                  })}
+                </div>
+                <div className="flex flex-col items-center transform group-hover:scale-105 transition-transform duration-300">
+                  <BatteryIndicator
+                    percentage={device.batteryLevel}
+                    size="sm"
+                    className="mb-1"
+                    isCharging={device.isCharging}
+                  />
+                  <span
+                    className={`text-sm font-medium ${
+                      theme === "dark" ? "text-white" : "text-[#1D1D1F]"
+                    } group-hover/item:text-primary transition-colors duration-300`}
+                  >
+                    {device.batteryLevel}%
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-col items-center">
-                <BatteryIndicator
-                  percentage={leftPod.batteryLevel}
-                  size="sm"
-                  className="mb-1"
-                  isCharging={leftPod.isCharging}
-                />
-                <span
-                  className={`text-sm font-medium ${
-                    theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                  }`}
-                >
-                  {leftPod.batteryLevel}%
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <div className="flex justify-center mb-2">
-                {getIcon("airpods_right", {
-                  size: 20,
-                  className:
-                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]",
-                })}
-              </div>
-              <div className="flex flex-col items-center">
-                <BatteryIndicator
-                  percentage={rightPod.batteryLevel}
-                  size="sm"
-                  className="mb-1"
-                  isCharging={rightPod.isCharging}
-                />
-                <span
-                  className={`text-sm font-medium ${
-                    theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                  }`}
-                >
-                  {rightPod.batteryLevel}%
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <div className="flex justify-center mb-2">
-                {getIcon("airpods_case", {
-                  size: 20,
-                  className:
-                    theme === "dark" ? "text-zinc-400" : "text-[#86868B]",
-                })}
-              </div>
-              <div className="flex flex-col items-center">
-                <BatteryIndicator
-                  percentage={airpodsCase.batteryLevel}
-                  size="sm"
-                  className="mb-1"
-                  isCharging={airpodsCase.isCharging}
-                />
-                <span
-                  className={`text-sm font-medium ${
-                    theme === "dark" ? "text-white" : "text-[#1D1D1F]"
-                  }`}
-                >
-                  {airpodsCase.batteryLevel}%
-                </span>
-              </div>
-            </div>
+            ))}
           </div>
 
           {Object.values([leftPod, rightPod, airpodsCase]).some(
             (pod) => pod.batteryLevel <= 20 && !pod.isCharging
           ) && (
-            <p className="text-sm font-medium text-[#FF3B30] mt-4 text-center">
+            <p className="text-sm font-medium text-[#FF3B30] mt-4 text-center animate-pulse">
               Low Battery
             </p>
           )}
