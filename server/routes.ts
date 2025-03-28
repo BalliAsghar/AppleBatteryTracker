@@ -22,7 +22,6 @@ async function readBatteryData() {
 export async function registerRoutes(app: Express): Promise<Server> {
   // API endpoint to get all devices
   app.get("/api/devices", async (req, res) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a delay
     const devices = await readBatteryData();
     res.json(devices);
   });
